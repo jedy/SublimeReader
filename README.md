@@ -25,4 +25,5 @@ Function
 其他
 ----
 
-* 可以安装ConvertToUTF8打开gbk文件
+* Mac可以安装ConvertToUTF8打开gbk文件
+* Windows上和ConvertToUTF8配合有问题
