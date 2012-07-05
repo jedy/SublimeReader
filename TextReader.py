@@ -1,6 +1,6 @@
 import sublime
 import sublime_plugin
-import sha
+import hashlib
 
 CONFIG = "TextReader.sublime-settings"
 MIN_FILE_SIZE = 10240
@@ -51,7 +51,9 @@ class TextReader(sublime_plugin.EventListener):
         src = view.substr(sublime.Region(0, vsize)).strip()
         if not src:
             return
-        return sha.sha(src.encode('utf8')).hexdigest()
+        sha1 = hashlib.sha1()
+        sha1.update(src.encode('utf8'))
+        return sha1.hexdigest()
 
     def _reset_not_use_reader(self, view, add_cur_file=False):
         not_use_reader = self.settings.get('not_use_reader', [])
