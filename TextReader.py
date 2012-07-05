@@ -49,7 +49,7 @@ class TextReader(sublime_plugin.EventListener):
         if (view_encoding == 'Undefined' or view_encoding == sublime.load_settings('Preferences.sublime-settings').get('fallback_encoding')) \
             and os.path.exists(os.path.join(sublime.packages_path(), "ConvertToUTF8")) \
             and not view.settings().get('origin_encoding'):
-                view.set_status("waiting_detect_encode", "Wait ConvertToUTF8 to detect encode. You may choose TextReader syntax manually")
+                view.set_status("waiting_detect_encode", "Wait ConvertToUTF8 to detect encoding. You may choose TextReader syntax manually")
                 view.settings().set("waiting_detect_encode", True)
                 return
         view.set_read_only(True)
