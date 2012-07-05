@@ -1,0 +1,17 @@
+[
+	{
+		"keys": [" "],
+		"command": "move", "args": {"by": "pages", "forward": true},
+		"context": [{ "key": "selector", "operator": "equal", "operand": "text.plain.reader" }]
+	},
+	{
+		"keys": ["shift+space"],
+		"command": "move", "args": {"by": "pages", "forward": false},
+		"context": [{ "key": "selector", "operator": "equal", "operand": "text.plain.reader" }]
+	},
+	{
+		"keys": ["enter"],
+		"command": "move", "args": {"by": "pages", "forward": true},
+		"context": [{ "key": "selector", "operator": "equal", "operand": "text.plain.reader" }]
+	}
+]
