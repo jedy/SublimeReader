@@ -16,10 +16,18 @@ class TextReader(sublime_plugin.EventListener):
         self._change_mode(view)
 
     def on_modified(self, view):
-        if view.settings().get("waiting_detect_encode") and view.settings().get('origin_encoding'):
-            view.settings().erase("waiting_detect_encode")
-            view.erase_status("waiting_detect_encode")
-            self._change_mode(view)
+        waiting_detect_encode = view.settings().get("waiting_detect_encode")
+        if waiting_detect_encode:
+            if view.settings().get('origin_encoding'):
+                view.settings().erase("waiting_detect_encode")
+                view.erase_status("waiting_detect_encode")
+                self._change_mode(view)
+            else:
+                if waiting_detect_encode <= 1:
+                    view.settings().erase("waiting_detect_encode")
+                    view.erase_status("waiting_detect_encode")
+                else:
+                    view.settings().set("waiting_detect_encode", waiting_detect_encode - 1)
 
     def on_close(self, view):
         syntax = view.settings().get('syntax', "")
@@ -50,7 +58,7 @@ class TextReader(sublime_plugin.EventListener):
             and os.path.exists(os.path.join(sublime.packages_path(), "ConvertToUTF8")) \
             and not view.settings().get('origin_encoding'):
                 view.set_status("waiting_detect_encode", "Wait ConvertToUTF8 to detect encode. You may choose TextReader syntax manually")
-                view.settings().set("waiting_detect_encode", True)
+                view.settings().set("waiting_detect_encode", 10)
                 return
         view.set_read_only(True)
         view.set_syntax_file(u'Packages/TextReader/TextReader.tmLanguage')
