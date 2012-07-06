@@ -13,6 +13,10 @@ class TextReader(sublime_plugin.EventListener):
         self.settings = sublime.load_settings(CONFIG)
 
     def on_load(self, view):
+        if view.settings().get('syntax', "") != u'Packages/Text/Plain text.tmLanguage':
+            return
+        if view.size() < MIN_FILE_SIZE or view.file_name() in self.settings.get('not_use_reader', []):
+            return
         self._change_mode(view)
 
     def on_modified(self, view):
@@ -49,15 +53,11 @@ class TextReader(sublime_plugin.EventListener):
         sublime.save_settings(CONFIG)
 
     def _change_mode(self, view):
-        if view.settings().get('syntax', "") != u'Packages/Text/Plain text.tmLanguage':
-            return
-        if view.size() < MIN_FILE_SIZE or view.file_name() in self.settings.get('not_use_reader', []):
-            return
         view_encoding = view.encoding()
         if (view_encoding == 'Undefined' or view_encoding == sublime.load_settings('Preferences.sublime-settings').get('fallback_encoding')) \
             and os.path.exists(os.path.join(sublime.packages_path(), "ConvertToUTF8")) \
             and not view.settings().get('origin_encoding'):
-                view.set_status("waiting_detect_encode", "Wait ConvertToUTF8 to detect encode. You may choose TextReader syntax manually")
+                view.set_status("waiting_detect_encode", "Wait ConvertToUTF8 to detect encoding. You may choose TextReader syntax manually")
                 view.settings().set("waiting_detect_encode", 10)
                 return
         view.set_read_only(True)
