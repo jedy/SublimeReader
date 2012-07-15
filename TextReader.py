@@ -68,6 +68,9 @@ class TextReader(sublime_plugin.EventListener):
         pos = self.settings.get('history', {}).get(fig)
         if not pos:
             return
+        sublime.set_timeout(lambda: self._show(view, pos), 500)
+
+    def _show(self, view, pos):
         view.show(int(pos[1]))
         view.show(int(pos[0]), False)
 
