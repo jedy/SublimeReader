@@ -39,7 +39,7 @@ class TextReader(sublime_plugin.EventListener):
             self._reset_not_use_reader(view, True)
             sublime.save_settings(CONFIG)
             return
-        if  syntax != u'Packages/TextReader/TextReader.tmLanguage':
+        if  syntax != u'Packages/Text Reader/TextReader.tmLanguage':
             return
         self._reset_not_use_reader(view)
         fig = self._digest(view)
@@ -61,7 +61,7 @@ class TextReader(sublime_plugin.EventListener):
                 view.settings().set("waiting_detect_encode", 10)
                 return
         view.set_read_only(True)
-        view.set_syntax_file(u'Packages/TextReader/TextReader.tmLanguage')
+        view.set_syntax_file(u'Packages/Text Reader/TextReader.tmLanguage')
         fig = self._digest(view)
         if not fig:
             return
