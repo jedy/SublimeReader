@@ -15,6 +15,9 @@ class TextReader(sublime_plugin.EventListener):
     def on_load(self, view):
         if view.settings().get('syntax', "") != u'Packages/Text/Plain text.tmLanguage':
             return
+        filename = view.file_name()
+        if filename and not filename.lower().endswith(".txt"):
+            return
         if view.size() < MIN_FILE_SIZE or view.file_name() in self.settings.get('not_use_reader', []):
             return
         self._change_mode(view)
