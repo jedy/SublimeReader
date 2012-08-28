@@ -76,6 +76,8 @@ class TextReader(sublime_plugin.EventListener):
     def _show(self, view, pos):
         view.show(int(pos[1]))
         view.show(int(pos[0]), False)
+        view.sel().clear()
+        view.sel().add(sublime.Region(int((pos[0]+pos[1])/2)))
 
     def _digest(self, view):
         vsize = min(10240, view.size())
