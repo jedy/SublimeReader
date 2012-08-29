@@ -4,7 +4,7 @@ Text Reader
 Function
 --------
 
-* automatically set to this "Reading Model" while opening text file larger than 10K
+* automatically set to this "Reading Mode" while opening text file larger than 10K
 * Set file to read only
 * space or enter to page down, shift+space to page up
 * remember the position of last read
