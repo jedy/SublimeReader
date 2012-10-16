@@ -48,8 +48,8 @@ class TextReader(sublime_plugin.EventListener):
         fig = self._digest(view)
         if not fig:
             return
-        pos = view.visible_region()
-        pos = [pos.begin(), pos.end()]
+        pos = view.viewport_position()
+        pos = list(pos)
         history = self.settings.get('history', {})
         history[fig] = pos
         self.settings.set('history', history)
@@ -74,10 +74,9 @@ class TextReader(sublime_plugin.EventListener):
         sublime.set_timeout(lambda: self._show(view, pos), 500)
 
     def _show(self, view, pos):
-        view.show(int(pos[1]))
-        view.show(int(pos[0]), False)
+        view.set_viewport_position(tuple(pos), False)
         view.sel().clear()
-        view.sel().add(sublime.Region(int((pos[0]+pos[1])/2)))
+        view.sel().add(sublime.Region(view.visible_region().begin()))
 
     def _digest(self, view):
         vsize = min(10240, view.size())
